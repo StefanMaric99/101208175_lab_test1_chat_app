@@ -1,17 +1,19 @@
 <input type="text" class="message-input">
 <button onclick="sendMessage()">Send</button>
-<div class="message-box"></div>
+<div class='message-box'>
+  <ul class="message-list"></ul>
+</div>
 
 <script>
   const socket = io("http://localhost:4000");
   socket.on('connection');
 
   socket.on("message", data => {
-    $('.message-box').append(`<p>${data}</p>`)
+    $('.message-list').append(`<li><p class='member-message'>${data}</p></li>`)
   })
   const sendMessage = () => {
     const msg = $('.message-input').val();
-    $('.message-box').append(`<p>${msg}</p>`)
+    $('.message-list').append(`<li><p class='owner-message'>${msg}</p></li>`)
     socket.emit("message", msg);
   }
 </script>
