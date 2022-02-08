@@ -1,20 +1,37 @@
+const { Message } = require("../schema");
+
 module.exports = {
   initiate: (io) => {
     // Run when client connects
     io.on("connection", (socket) => {
-      console.log({ socket: socket.id }, "user connected")
-      socket.on("message", async (data) => {
-        socket.broadcast.emit("message", data)
+      // console.log({ socket: socket.id }, "user connected")
+
+      socket.on("message", async (msg) => {
+        const { username, roomname } = socket;
+        const message = new Message({
+          from_user: username,
+          to_user: `everyone in the group of ${roomname}`,
+          message: msg,
+          date_sent: new Date().toTimeString(),
+          room: roomname
+        });
+
+        message.save()
+          .then(result => console.log(result))
+          .catch(err => console.log(err))
+        socket.broadcast.emit("message", msg);
       })
 
-
       socket.on("joinChat", async ({ username, roomname }) => {
-        console.log({ username, roomname })
-        // socket.join(user.room);
+        // console.log({ username, roomname })
+
+        // TODO take it out, if it does not need it
+        socket.join(username);
         socket.username = username;
-        // socket.username = user.username
-        // // // Welcome current user
-        // // socket.emit("message", { msg: "Hi", user: "Server" });
+        socket.roomname = roomname;
+
+        // // Welcome current user
+        // socket.emit("message", { msg: "Hi", user: "Server" });
 
         // // Broadcast when a user connects
         // socket.broadcast.to(user.room).emit("message", {
@@ -31,7 +48,7 @@ module.exports = {
       });
 
       socket.on("typing", (data) => {
-        console.log(data);
+        // console.log(data);
         socket.broadcast.emit("typing", { username: socket.username })
       })
 
