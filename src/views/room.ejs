@@ -1,0 +1,17 @@
+<input type="text" class="message-input">
+<button onclick="sendMessage()">Send</button>
+<div class="message-box"></div>
+
+<script>
+  const socket = io("http://localhost:4000");
+  socket.on('connection');
+
+  socket.on("message", data => {
+    $('.message-box').append(`<p>${data}</p>`)
+  })
+  const sendMessage = () => {
+    const msg = $('.message-input').val();
+    $('.message-box').append(`<p>${msg}</p>`)
+    socket.emit("message", msg);
+  }
+</script>
