@@ -43,12 +43,12 @@ app.use(function (req, res, next) { // to have access to all session stored vari
 app.use("/", require("./routes/index.js"));
 
 // Mongo & Mongoose
-// dbConnect()
-//   .then(() => {
-server.listen(PORT, () => {
-  console.log(`🚀 Server ready at http://localhost:4000`);
-});
-// })
-// .catch((err) => {
-//   console.log("mongo db connection failed", err)
-// });
+dbConnect()
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log(`🚀 Server ready at http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("mongo db connection failed", err)
+  });

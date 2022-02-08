@@ -8,11 +8,10 @@ module.exports = {
       })
 
 
-      socket.on("joinChat", async ({ username, room }) => {
-        console.log({ username, room })
-        // const user = await utils.userJoin(socket.id, username, room);
+      socket.on("joinChat", async ({ username, roomname }) => {
+        console.log({ username, roomname })
         // socket.join(user.room);
-
+        socket.username = username;
         // socket.username = user.username
         // // // Welcome current user
         // // socket.emit("message", { msg: "Hi", user: "Server" });
@@ -30,6 +29,11 @@ module.exports = {
         //   prevMsg: ["test", "test2"]
         // });
       });
+
+      socket.on("typing", (data) => {
+        console.log(data);
+        socket.broadcast.emit("typing", { username: socket.username })
+      })
 
       // Receive messages from a client
       socket.on("chatMessage", (msg) => {

@@ -1,19 +1,36 @@
-<input type="text" class="message-input">
+<h3 class="username">Mr.<%= session['user']['username'] %>
+</h3>
+<h4 class="roomname">Room name: <%= session['roomname'] %>
+</h4>
+
+<input type="text" id="message-input">
 <button onclick="sendMessage()">Send</button>
 <div class='message-box'>
   <ul class="message-list"></ul>
 </div>
 
-<script>
-  const socket = io("http://localhost:4000");
-  socket.on('connection');
+<% console.log("sessions", session) %>
 
-  socket.on("message", data => {
-    $('.message-list').append(`<li><p class='member-message'>${data}</p></li>`)
-  })
-  const sendMessage = () => {
-    const msg = $('.message-input').val();
-    $('.message-list').append(`<li><p class='owner-message'>${msg}</p></li>`)
-    socket.emit("message", msg);
-  }
-</script>
+  <script>
+    const socket = io("http://localhost:4000");
+    socket.on('connection');
+    const username = $('.username').text();
+    const roomname = $('.roomname').text();
+    console.log("INFO", { username, roomname })
+
+    socket.emit("joinChat", { username, roomname });
+
+    socket.on("message", data => {
+      $('.message-list').append(`<li><p class='member-message'>${data}</p></li>`)
+    })
+    const sendMessage = () => {
+      const msg = $('#message-input').val();
+      $('.message-list').append(`<li><p class='owner-message'>${msg}</p></li>`)
+      socket.emit("message", msg);
+    }
+
+    $('#message-input').bind('keypress', (data) => {
+      // console.log(data);
+      socket.emit("typing", username)
+    })
+  </script>
