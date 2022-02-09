@@ -1,21 +1,29 @@
 <form action="/signup" method="post">
-  <labe>firstname
-    <input type="text" name="firstName">
-  </label>
-    
-  <labe>lastName
-    <input type="text" name="lastName">
-  </label>
-      
-  <labe>username
-    <input type="text" name="username">
-  </label>
-        
-  <labe>password
-    <input type="password" name="password">
-  </label>
-  
-  <button>Sign Up</button>
+  <div class="mb-3">
+    <label>firstname
+      <input type="text" name="firstName" class="form-control">
+    </label>
+  </div>
+
+  <div class="mb-3">
+    <label>lastName
+      <input type="text" name="lastName" class="form-control">
+    </label>
+  </div>
+
+  <div class="mb-3">
+    <label>username
+      <input type="text" name="username" class="form-control">
+    </label>
+  </div>
+
+  <div class="mb-3">
+    <label>password
+      <input type="password" name="password" class="form-control">
+    </label>
+  </div>
+
+  <button class="btn btn-success">Sign Up</button>
 </form>
 
 <a href="/login">if you already have an account</a>

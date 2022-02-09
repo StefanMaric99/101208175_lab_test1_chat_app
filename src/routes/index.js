@@ -42,9 +42,10 @@ router.post('/room', (req, res) => {
 	res.render("room", { title: `Welcome to ${roomname}` })
 })
 
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
 	req.session.destroy();
-	res.status(200).render("login", { title: "Login" })
+	// res.status(200).render("login", { title: "Login" })
+  res.redirect('/login')
 })
 
 module.exports = router;
