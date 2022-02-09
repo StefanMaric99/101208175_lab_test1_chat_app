@@ -1,14 +1,14 @@
 <div class="d-flex">
   <h3>Username - </h3>
-  <h3 class="username"><%= session['user']['username'] %></h3>
+  <h3 class="username">&nbsp;<%= session['user']['username'] %></h3>
 </div>
 
 <div class="d-flex">
   <h4>Room name - </h4>
-  <h4 class="roomname"><%= session['roomname'] %></h4>
+  <h4 class="roomname">&nbsp;<%= session['roomname'] %></h4>
 </div>
 
-<div class='message-box'>
+<div class='message-box bg-dark text-light p-5 rounded'>
   <ul class="message-list"></ul>
 </div>
 
@@ -17,8 +17,9 @@
 </div>
 
 <div class="">
-  <input type="text" id="message-input" class="form-control">
+  <input type="text" id="message-input" class="form-control mb-3">
   <button class="btn btn-success" onclick="sendMessage()">Send</button>
+  <a class="btn btn-warning" href="/leave">Leave a room</a>
 </div>
 
 <% console.log("room.ejs/session", {session}) %>

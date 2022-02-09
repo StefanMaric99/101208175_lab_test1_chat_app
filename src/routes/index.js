@@ -46,6 +46,10 @@ router.get('/logout', (req, res) => {
 	req.session.destroy();
 	// res.status(200).render("login", { title: "Login" })
   res.redirect('/login')
+});
+
+router.get('/leave', (req, res) => {
+  res.render('roomname', { title: 'Choose Room' });
 })
 
 module.exports = router;

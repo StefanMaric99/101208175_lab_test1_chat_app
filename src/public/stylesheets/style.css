@@ -1,3 +1,13 @@
 .owner-message {
 	text-align: right;
 }
+
+.message-list {
+    height: 40%;
+    overflow: auto;
+}
+
+.message-list > li {
+    list-style: none;
+    margin-right: 10px;
+}
