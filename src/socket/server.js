@@ -19,7 +19,9 @@ module.exports = {
         message.save()
           .then(result => console.log(result))
           .catch(err => console.log(err))
-        socket.broadcast.emit("message", msg);
+
+        // work around for seperating room system
+        socket.broadcast.emit("message", { msg, roomname });
       })
 
       socket.on("joinChat", async ({ username, roomname }) => {
@@ -66,7 +68,8 @@ module.exports = {
       });
 
       socket.on("typing", () => {
-        socket.broadcast.emit("typing", { user: socket.username })
+        const { username, roomname } = socket;
+        socket.broadcast.emit("typing", { username, roomname })
       })
 
       // Runs when client disconnects

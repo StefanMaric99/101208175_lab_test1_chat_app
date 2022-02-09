@@ -15,6 +15,10 @@
   <ul class="message-list"></ul>
 </div>
 
+<div>
+  <p id="typing"></p>
+</div>
+
 <% console.log("room.ejs/session", {session}) %>
 
 <script>
@@ -25,9 +29,14 @@
 
   socket.emit("joinChat", { username, roomname });
 
+  // TODO data now contains message and roomname, since it is work around
   socket.on("message", data => {
-    $('.message-list').append(`<li><p class='member-message'>${data}</p></li>`)
+    if(data['roomname'] === roomname) {
+      $('.message-list').append(`<li><p class='member-message'>${data['msg']}</p></li>`);
+      $('#typing').text(''); 
+    }
   })
+
   const sendMessage = () => {
     const msg = $('#message-input').val();
     $('.message-list').append(`<li><p class='owner-message'>${msg}</p></li>`);
@@ -36,7 +45,12 @@
   }
 
   $('#message-input').bind('keypress', (data) => {
-    // console.log(data);
     socket.emit("typing", username)
+  })
+
+  socket.on("typing", data => {
+    if(data['roomname'] === roomname) {
+      $('#typing').text(`${data['username']} is typing`);
+    }
   })
 </script>
